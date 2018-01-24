@@ -1,0 +1,113 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Restrict Content Pro - Fatture In Cloud\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-01-24 08:06+0000\n"
+"PO-Revision-Date: 2018-01-24 08:07+0000\n"
+"Last-Translator: SilverbackStudio <webmaster@silverbackstudio.it>\n"
+"Language-Team: Italian\n"
+"Language: it-IT\n"
+"Plural-Forms: nplurals=2; plural=n != 1\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco - https://localise.biz/"
+
+#: includes/class-wc-integration-fattureincloud.php:37
+msgid "Fatture in Cloud"
+msgstr ""
+
+#: includes/class-wc-integration-fattureincloud.php:38
+msgid "Manage WooCommerce order invoices with Fattureincloud"
+msgstr ""
+
+#: includes/class-wc-integration-fattureincloud.php:75
+msgid ""
+"Enter with your API UID. You can find this at fattureincloud.it in the "
+"\"API\" left main menu."
+msgstr ""
+
+#: includes/class-wc-integration-fattureincloud.php:80
+msgid "API Key"
+msgstr ""
+
+#: includes/class-wc-integration-fattureincloud.php:82
+msgid ""
+"Enter with your API Key. You can find this at fattureincloud.it in the "
+"\"API\" left main menu."
+msgstr ""
+
+#: includes/class-wc-integration-fattureincloud.php:89
+msgid "Enter your default Wallet"
+msgstr ""
+
+#: includes/class-wc-integration-fattureincloud.php:94
+msgid "Debug Log"
+msgstr ""
+
+#: includes/class-wc-integration-fattureincloud.php:96
+msgid "Enable logging"
+msgstr ""
+
+#: includes/class-wc-integration-fattureincloud.php:98
+msgid "Log events such as API requests"
+msgstr "Effettua il log degli eventi, ad esempio le richieste API"
+
+#: includes/class-wc-integration-fattureincloud.php:226
+#: includes/class-wc-integration-fattureincloud.php:250
+msgid "Company Tax Code"
+msgstr ""
+"Partita IVA\n"
+
+#: includes/class-wc-integration-fattureincloud.php:227
+msgctxt "vat id placeholder"
+msgid "IT012345678910"
+msgstr "IT012345678910"
+
+#: includes/class-wc-integration-fattureincloud.php:233
+#: includes/class-wc-integration-fattureincloud.php:254
+msgid "Fiscal Code"
+msgstr "Codice Fiscale"
+
+#: includes/class-wc-integration-fattureincloud.php:234
+msgctxt "fiscal code placeholder"
+msgid "ABCZXY00A00A000N"
+msgstr "ABCZXY00A00A000N"
+
+#. Name of the plugin
+msgid "WooCommerce - Fatture In Cloud"
+msgstr "WooCommerce - Fatture In Cloud"
+
+#. Description of the plugin
+msgid "Integrates WooCommerce with FattureInCloud"
+msgstr "Integra WooCommerce con Fatture in Cloud"
+
+#: includes/class-wc-integration-fattureincloud.php:73
+msgid "API UID"
+msgstr "API UID"
+
+#: includes/class-wc-integration-fattureincloud.php:87
+msgid "Wallet"
+msgstr "Conto Pagamenti"
+
+#: includes/class-wc-integration-fattureincloud.php:294
+msgid ""
+"Invoice not yet available, please contact and administrative to get more info"
+msgstr ""
+"La fattura non é ancora disponibile, prego contattare l'amministrazione per "
+"maggiori informazioni"
+
+#: includes/class-wc-integration-fattureincloud.php:312
+msgid ""
+"Invoice service not available, please try later or contact business owner"
+msgstr ""
+"Il servizio di fatturazione non è raggiungibile al momento, per favore "
+"riprovare più tardi."
+
+#. Author of the plugin
+msgid "Silverback Studio"
+msgstr "Silverback Studio"
+
+#. Author URI of the plugin
+msgid "http://www.silverbackstudio.it/"
+msgstr "http://www.silverbackstudio.it/"
