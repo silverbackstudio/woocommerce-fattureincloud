@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-24 08:06+0000\n"
+"POT-Creation-Date: 2018-01-24 14:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -14,82 +14,141 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco - https://localise.biz/"
 
-#: includes/class-wc-integration-fattureincloud.php:37
+#: includes/class-wc-integration-fattureincloud.php:40
 msgid "Fatture in Cloud"
 msgstr ""
 
-#: includes/class-wc-integration-fattureincloud.php:38
+#: includes/class-wc-integration-fattureincloud.php:41
 msgid "Manage WooCommerce order invoices with Fattureincloud"
 msgstr ""
 
-#: includes/class-wc-integration-fattureincloud.php:73
+#: includes/class-wc-integration-fattureincloud.php:84
+msgid "-- Auto Select --"
+msgstr ""
+
+#: includes/class-wc-integration-fattureincloud.php:88
 msgid "API UID"
 msgstr ""
 
-#: includes/class-wc-integration-fattureincloud.php:75
+#: includes/class-wc-integration-fattureincloud.php:90
 msgid ""
 "Enter with your API UID. You can find this at fattureincloud.it in the "
 "\"API\" left main menu."
 msgstr ""
 
-#: includes/class-wc-integration-fattureincloud.php:80
+#: includes/class-wc-integration-fattureincloud.php:95
 msgid "API Key"
 msgstr ""
 
-#: includes/class-wc-integration-fattureincloud.php:82
+#: includes/class-wc-integration-fattureincloud.php:97
 msgid ""
 "Enter with your API Key. You can find this at fattureincloud.it in the "
 "\"API\" left main menu."
 msgstr ""
 
-#: includes/class-wc-integration-fattureincloud.php:87
+#: includes/class-wc-integration-fattureincloud.php:102
 msgid "Wallet"
 msgstr ""
 
-#: includes/class-wc-integration-fattureincloud.php:89
+#: includes/class-wc-integration-fattureincloud.php:104
 msgid "Enter your default Wallet"
 msgstr ""
 
-#: includes/class-wc-integration-fattureincloud.php:94
+#: includes/class-wc-integration-fattureincloud.php:110
+msgid "Default Tax Class"
+msgstr ""
+
+#: includes/class-wc-integration-fattureincloud.php:112
+msgid "Select the default tax class"
+msgstr ""
+
+#: includes/class-wc-integration-fattureincloud.php:118
+msgid "Additional Tax Classes"
+msgstr ""
+
+#: includes/class-wc-integration-fattureincloud.php:120
+msgid "Add this tax classes to the Additional Tax Classes"
+msgstr ""
+
+#: includes/class-wc-integration-fattureincloud.php:126
+msgid "Generate automatically on"
+msgstr ""
+
+#: includes/class-wc-integration-fattureincloud.php:130
+msgid "Generate invoices automatically when order is on this statuses"
+msgstr ""
+
+#: includes/class-wc-integration-fattureincloud.php:133
 msgid "Debug Log"
 msgstr ""
 
-#: includes/class-wc-integration-fattureincloud.php:96
+#: includes/class-wc-integration-fattureincloud.php:135
 msgid "Enable logging"
 msgstr ""
 
-#: includes/class-wc-integration-fattureincloud.php:98
+#: includes/class-wc-integration-fattureincloud.php:137
 msgid "Log events such as API requests"
 msgstr ""
 
-#: includes/class-wc-integration-fattureincloud.php:226
-#: includes/class-wc-integration-fattureincloud.php:250
+#: includes/class-wc-integration-fattureincloud.php:267
+#: includes/class-wc-integration-fattureincloud.php:291
 msgid "Company Tax Code"
 msgstr ""
 
-#: includes/class-wc-integration-fattureincloud.php:227
+#: includes/class-wc-integration-fattureincloud.php:268
 msgctxt "vat id placeholder"
 msgid "IT012345678910"
 msgstr ""
 
-#: includes/class-wc-integration-fattureincloud.php:233
-#: includes/class-wc-integration-fattureincloud.php:254
+#: includes/class-wc-integration-fattureincloud.php:274
+#: includes/class-wc-integration-fattureincloud.php:295
 msgid "Fiscal Code"
 msgstr ""
 
-#: includes/class-wc-integration-fattureincloud.php:234
+#: includes/class-wc-integration-fattureincloud.php:275
 msgctxt "fiscal code placeholder"
 msgid "ABCZXY00A00A000N"
 msgstr ""
 
-#: includes/class-wc-integration-fattureincloud.php:294
+#: includes/class-wc-integration-fattureincloud.php:314
+#: includes/class-wc-integration-fattureincloud.php:334
+msgid "Download Invoice"
+msgstr ""
+
+#: includes/class-wc-integration-fattureincloud.php:320
+msgid "Generate Invoice"
+msgstr ""
+
+#: includes/class-wc-integration-fattureincloud.php:362
+msgid "Invoice already generated"
+msgstr ""
+
+#: includes/class-wc-integration-fattureincloud.php:369
+msgid ""
+"Error generating invoice, please try later or notify system administrator"
+msgstr ""
+
+#: includes/class-wc-integration-fattureincloud.php:373
+msgid "You do not have sufficient permissions to do this."
+msgstr ""
+
+#: includes/class-wc-integration-fattureincloud.php:398
 msgid ""
 "Invoice not yet available, please contact and administrative to get more info"
 msgstr ""
 
-#: includes/class-wc-integration-fattureincloud.php:312
+#: includes/class-wc-integration-fattureincloud.php:407
 msgid ""
 "Invoice service not available, please try later or contact business owner"
+msgstr ""
+
+#: includes/class-wc-integration-fattureincloud.php:411
+msgid "You do not have sufficient permissions to view this invoice."
+msgstr ""
+
+#: includes/class-wc-integration-fattureincloud.php:468
+#, php-format
+msgid "%2$s%% VAT"
 msgstr ""
 
 #. Name of the plugin

@@ -23,5 +23,5 @@
         "psr-0": {
             "Svbk\\WP\\Plugins\\WooCommerce\\FattureInCloud\\WC_Integration_FattureInCloud": "include/class-wc-integration-fattureincloud.php"
         }
-    },       
+    } 
 }
