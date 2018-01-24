@@ -20,10 +20,13 @@ if ( ! class_exists( __NAMESPACE__ . '\\WC_Integration_FattureInCloud' ) ) :
     
 class WC_Integration_FattureInCloud extends WC_Integration {
     
-	protected $api_key;
-	protected $api_uid;
-	protected $wallet;
-	protected $debug = false;       
+	public $api_key;
+	public $api_uid;
+	public $wallet;
+	public $default_tax_class = 0;
+	public $additional_tax_classes;
+	public $generate_on_status = array();
+	public $debug = false;       
     
     protected $client;
     
@@ -38,34 +41,48 @@ class WC_Integration_FattureInCloud extends WC_Integration {
 		$this->method_description = __( 'Manage WooCommerce order invoices with Fattureincloud', 'woocommerce-fattureincloud' );
 		
 		// Load the settings.
-		$this->init_form_fields();
 		$this->init_settings();
 		
 		// Define user set variables.
 		$this->api_uid          = $this->get_option( 'api_uid' );
 		$this->api_key          = $this->get_option( 'api_key' );
-		$this->wallet          = $this->get_option( 'wallet' );
+		$this->wallet           = $this->get_option( 'wallet' );
+		$this->default_tax_class    = $this->get_option( 'default_tax_class' );
+		$this->additional_tax_classes    = $this->get_option( 'additional_tax_classes' );
+		$this->generate_on_status    = (array)$this->get_option( 'generate_on_status' );
 		$this->debug            = $this->get_option( 'debug' );
 		
-		$this->client = new FattureInCloud\Client( $this->api_uid, $this->api_key );
+		$this->client = new FattureInCloud\Client( $this->api_uid, $this->api_key );		
+		
+		$this->init_form_fields();
 		
 		// Actions.
 		add_action( 'woocommerce_update_options_integration_' .  $this->id, array( $this, 'process_admin_options' ) );
 		
-	    add_action( 'woocommerce_order_status_completed', array( $this, 'generate_invoice'), 99, 2 );
+		foreach ( $this->generate_on_status as $generate_status ) {
+	        add_action( 'woocommerce_order_status_' . $generate_status, array( $this, 'generate_invoice'), 99, 2 );
+		}
 	    
 	    add_filter( 'woocommerce_settings_api_sanitized_fields_' . $this->id, array( $this, 'sanitize_settings' ) );
         add_filter( 'woocommerce_billing_fields', array( $this, 'billing_fields' ) );
         add_filter( 'woocommerce_admin_billing_fields' ,  array( $this, 'admin_billing_fields')  );  
         
         add_filter( 'woocommerce_admin_order_actions', array( $this, 'admin_order_actions'), 10 ,2 );
-        add_action( 'wp_ajax_woocommerce_fattureincloud_invoice' , array( $this, 'download_invoice' ) );
+        add_filter( 'woocommerce_my_account_my_orders_actions' , array( $this, 'user_orders_actions' ), 10, 2);
+        
+        add_action( 'wp_ajax_woocommerce_fattureincloud_gen_invoice' , array( $this, 'generate_invoice_action' ) );
+        add_action( 'wp_ajax_woocommerce_fattureincloud_dl_invoice' , array( $this, 'download_invoice_action' ) );
+        
+        add_filter( 'option_woocommerce_tax_classes', array( $this, 'append_tax_classes' ) );
         
 	}
 	/**
 	 * Initialize integration settings form fields.
 	 */
 	public function init_form_fields() {
+	    
+	    $wallets = array( '' => __( '-- Auto Select --', 'woocommerce-fattureincloud' ) ) + wp_list_pluck($this->getInfo('lista_conti'), 'nome_conto', 'id');
+	    
 		$this->form_fields = array(
 			'api_uid' => array(
 				'title'             => __( 'API UID', 'woocommerce-fattureincloud' ),
@@ -76,17 +93,41 @@ class WC_Integration_FattureInCloud extends WC_Integration {
 			),		    
 			'api_key' => array(
 				'title'             => __( 'API Key', 'woocommerce-fattureincloud' ),
-				'type'              => 'text',
+				'type'              => 'password',
 				'description'       => __( 'Enter with your API Key. You can find this at fattureincloud.it in the "API" left main menu.', 'woocommerce-fattureincloud' ),
 				'desc_tip'          => true,
 				'default'           => ''
 			),
 			'wallet' => array(
 				'title'             => __( 'Wallet', 'woocommerce-fattureincloud' ),
-				'type'              => 'text',
+				'type'              => 'select',
 				'description'       => __( 'Enter your default Wallet', 'woocommerce-fattureincloud' ),
 				'desc_tip'          => true,
-				'default'           => ''
+				'default'           => '',
+				'options'           => $wallets,
+			),	
+			'default_tax_class' => array(
+				'title'             => __( 'Default Tax Class', 'woocommerce-fattureincloud' ),
+				'type'              => 'select',
+				'description'       => __( 'Select the default tax class', 'woocommerce-fattureincloud' ),
+				'desc_tip'          => true,
+				'default'           => $this->default_tax_class,
+				'options'           => $this->tax_classes_names(),
+			),			
+			'additional_tax_classes' => array(
+				'title'             => __( 'Additional Tax Classes', 'woocommerce-fattureincloud' ),
+				'type'              => 'multiselect',
+				'description'       => __( 'Add this tax classes to the Additional Tax Classes', 'woocommerce-fattureincloud' ),
+				'desc_tip'          => true,
+				'default'           => '',
+				'options'           => $this->tax_classes_names(),
+			),				
+			'generate_on_status' => array(
+				'title'             => __( 'Generate automatically on', 'woocommerce-fattureincloud' ),
+				'type'              => 'multiselect',
+				'default'           => '',
+				'options'           => self::order_statuses(),
+				'description'       => __( 'Generate invoices automatically when order is on this statuses', 'woocommerce-fattureincloud' ),
 			),			
 			'debug' => array(
 				'title'             => __( 'Debug Log', 'woocommerce-fattureincloud' ),
@@ -158,10 +199,13 @@ class WC_Integration_FattureInCloud extends WC_Integration {
     			array(
     				'data_scadenza' => $payment_date,
     				'importo' => 'auto',
-    				//'metodo' => $this->wallet,
     				'data_saldo' => $payment_date,
     			)
     		);
+    		
+    		if( $this->wallet ) {
+    		    $invoicePayment->metodo = $this->wallet;
+    		}
     		
     		$order_items = array();
     		
@@ -177,7 +221,7 @@ class WC_Integration_FattureInCloud extends WC_Integration {
             				'nome' => $item->get_name(),
             				'prezzo_netto' => $item->get_subtotal(),
             				'prezzo_lordo' => $item->get_subtotal() + $item->get_subtotal_tax(),
-            				'cod_iva' => 0,
+            				'cod_iva' => $this->default_tax_class,
             			)
         		    );
     		    }
@@ -208,7 +252,6 @@ class WC_Integration_FattureInCloud extends WC_Integration {
     			$order->add_meta_data( 'fattureincloud_invoice_id', $id_fattura, true );
     			$order->save_meta_data();
     		} else {
-    		    var_dump($result);
     		    return false;
     		}
     
@@ -261,11 +304,21 @@ class WC_Integration_FattureInCloud extends WC_Integration {
     
     public function admin_order_actions( $actions, $order ){
         
-		if ( $order->has_status( wc_get_is_paid_statuses() ) ) {
-			$actions['fattureincloud-invoice'] = array(
-				'url'       => wp_nonce_url( admin_url( 'admin-ajax.php?action=woocommerce_fattureincloud_invoice&order_id=' . $order->get_id() ), 'woocommerce-fattureincloud-invoice' ),
-				'name'      => __( 'Download Invoice', 'woocommerce' ),
-				'action'    => "download",
+        if( ! $order->has_status( wc_get_is_paid_statuses() ) ) {
+            return $actions;
+        }
+        
+		if ( $order->get_meta( 'fattureincloud_invoice_id' ) ) {
+			$actions['fic-invoice-download'] = array(
+				'url'       => wp_nonce_url( admin_url( 'admin-ajax.php?action=woocommerce_fattureincloud_dl_invoice&order_id=' . $order->get_id() ), 'woocommerce-fattureincloud-invoice-dl' ),
+				'name'      => __( 'Download Invoice', 'woocommerce-fattureincloud' ),
+				'action'    => "invoice-download",
+			);		    
+		} else {
+		    $actions['fic-invoice-generate'] = array(
+				'url'       => wp_nonce_url( admin_url( 'admin-ajax.php?action=woocommerce_fattureincloud_gen_invoice&order_id=' . $order->get_id() ), 'woocommerce-fattureincloud-invoice-gen' ),
+				'name'      => __( 'Generate Invoice', 'woocommerce-fattureincloud' ),
+				'action'    => "invoice-generate",
 			);
 		}        
 		
@@ -273,62 +326,176 @@ class WC_Integration_FattureInCloud extends WC_Integration {
         
     }
     
-	public function download_invoice() {
+	public function user_orders_actions($actions, $order) {
 	    
-		if ( current_user_can( 'edit_shop_orders' ) && check_admin_referer( 'woocommerce-fattureincloud-invoice' ) ) {
-			$order  = wc_get_order( absint( $_GET['order_id'] ) );
+    	if ( $order->has_status( wc_get_is_paid_statuses() ) && $order->get_meta( 'fattureincloud_invoice_id' ) ) {
+			$actions['fattureincloud-invoice'] = array(
+				'url'       => wp_nonce_url( admin_url( 'admin-ajax.php?action=woocommerce_fattureincloud_dl_invoice&order_id=' . $order->get_id() ), 'woocommerce-fattureincloud-invoice-dl' ),
+				'name'      => __( 'Download Invoice', 'woocommerce-fattureincloud' ),
+				'action'    => "invoice",
+			);	    
+        }	
+		
+		return $actions;
+	}    
+
+	public function generate_invoice_action() { 
+	    
+	    $order_id = filter_input(INPUT_GET, 'order_id', FILTER_VALIDATE_INT, 
+	        array(
+                'options' => array(
+                    'min_range' => 0,
+                )
+            )
+        );
+	    
+		if ( ( current_user_can( 'manage_woocommerce_orders' ) || current_user_can( 'edit_shop_orders' ) ) && check_admin_referer( 'woocommerce-fattureincloud-invoice-gen' ) ) {
+			$order  = wc_get_order( $order_id );
+
+			if ( ! $order ) {
+			    exit;
+			}	    
+			
+            $invoice_id = $order->get_meta( 'fattureincloud_invoice_id' );
+
+        	if ( $invoice_id ) {
+                wp_die( esc_html__( 'Invoice already generated', 'woocommerce-fattureincloud' ) );
+        	}
+        	
+        	if( $this->generate_invoice( $order_id ) ) {
+        	    wp_safe_redirect( wp_get_referer() ? wp_get_referer() : admin_url( 'edit.php?post_type=shop_order' ) );
+		        exit;
+        	} else {
+        	    wp_die( esc_html__( 'Error generating invoice, please try later or notify system administrator', 'woocommerce-fattureincloud' ) );
+        	}
+        	
+		} else {
+		    wp_die( __( 'You do not have sufficient permissions to do this.', 'woocommerce-fattureincloud' ) );
+		}
+	    
+	}
+
+	public function download_invoice_action() {
+	    
+	    $order_id = filter_input(INPUT_GET, 'order_id', FILTER_VALIDATE_INT, 
+	        array(
+                'options' => array(
+                    'min_range' => 0,
+                )
+            )
+        );
+	    
+		if ( $order_id && current_user_can( 'view_order', $order_id )  && check_admin_referer( 'woocommerce-fattureincloud-invoice-dl' ) ) {
+			$order  = wc_get_order( $order_id );
 
 			if ( ! $order ) {
 			    exit;
 			}
-
+			
             $invoice_id = $order->get_meta( 'fattureincloud_invoice_id' );
 
         	if ( ! $invoice_id ) {
-        	    
-        	    $invoice_id = $this->generate_invoice( $order->get_id() );
-                
-                if( ! $invoice_id ) {   
-        		    wp_die( esc_html__( 'Invoice not yet available, please contact and administrative to get more info', 'woocommerce-fattureincloud' ) );
-                }
+                wp_die( esc_html__( 'Invoice not yet available, please contact and administrative to get more info', 'woocommerce-fattureincloud' ) );
         	}
         
-        	$dettagliRequest = new FattureInCloud\Struct\DocDettagliRequest(
+            $invoice_url = $this->get_invoice_url( $invoice_id );
+        
+            if( $invoice_url ) {
+        		wp_redirect( $invoice_url );
+        		die();
+        	} else {
+            	wp_die( esc_html__( 'Invoice service not available, please try later or contact business owner', 'woocommerce-fattureincloud' ) );             
+        	}
+                
+		} else {
+		    wp_die( __( 'You do not have sufficient permissions to view this invoice.', 'woocommerce-fattureincloud' ) );
+		}
+
+		exit;
+	}  
+    
+	public function get_invoice_url( $invoice_id ) {
+	    
+	    $cache_key = 'woocommerce_fattureincloud_invoice_url_' . $invoice_id ;
+    	$invoice_url = get_transient( $cache_key );
+	    
+	    if ( false === $invoice_url ) {
+    	        
+        	$dettagli_request = new FattureInCloud\Struct\DocDettagliRequest(
         		array(
         			'id' => $invoice_id,
         		)
         	);
         	
-        	$result = $this->client->getDettagliDoc( FattureInCloud\Client::TYPE_FATTURA, $dettagliRequest );
+        	$result = $this->client->getDettagliDoc( FattureInCloud\Client::TYPE_FATTURA, $dettagli_request );
         
         	if ( $result && $result->success ) {
         		$invoice_url = $result->dettagli_documento->link_doc;
-        		wp_redirect( $invoice_url );
-        		die();
-        	}
-        
-        	wp_die( esc_html__( 'Invoice service not available, please try later or contact business owner', 'woocommerce-fattureincloud' ) );             
-                
-		}
-
-		exit;
+                set_transient( $cache_key, $invoice_url, DAY_IN_SECONDS );        		
+        	} 
+        	
+	    }
+    	
+    	return $invoice_url;
+    
 	}    
 	
-    public function countries( $countries ) {
+    public function getInfo( $info, $cache = true, $cache_time = 2 * DAY_IN_SECONDS ){
     
-    	$cache_key = 'woocommerce_fattureincloud_countries';
-    	$countries = get_transient( $cache_key );
+    	$cache_key = 'woocommerce_fattureincloud_info_' . $info ;
+    	$values = get_transient( $cache_key );
     
-    	if ( false === $countries ) {
-    		$response = $this->client->getInfoList( array( 'lista_paesi' ) );
+    	if ( (false === $values) || !$cache ) {
+    		$response = $this->client->getInfoList( array( $info ) );
     
     		if ( ($response !== false) && $response->success ) {
-    			$countries = $response->lista_paesi;
-    			set_transient( $cache_key, $countries, 2 * DAY_IN_SECONDS );
+    			$values = $response->$info;
+    			set_transient( $cache_key, $values, $cache_time );
     		}
     	}
     
-    	return $countries;
+    	return $values;        
+    }
+    
+    public function tax_classes_names(){
+        
+        $liste_iva = $this->getInfo('lista_iva'); 
+	    
+	    $tax_classes = array();
+	    
+	    foreach( $liste_iva as $aliquota_iva ) {
+	        $tax_classes[$aliquota_iva['cod_iva']] = sprintf( 
+	            $aliquota_iva['descrizione_iva'] ? '%s' : __('%2$s%% VAT', 'woocommerce-fattureincloud' ), 
+	            $aliquota_iva['descrizione_iva'],
+	            $aliquota_iva['valore_iva']
+	       );
+	    }
+	    
+	    return $tax_classes;
+    }
+    
+    public static function order_statuses(){
+        
+        $native_statuses  = wc_get_order_statuses();
+        $statuses = array();
+        
+        foreach ($native_statuses as $status => $name ) {
+               $statuses[ substr( $status, 3 ) ] = $name;
+        }
+        
+        $statuses = array_intersect_key($statuses, array_flip(wc_get_is_paid_statuses()) );
+        
+        return $statuses;
+    }
+    
+    public function append_tax_classes( $tax_classes ) {
+        
+        if( $this->additional_tax_classes ) {
+            $new_tax_classes = array_intersect_key($this->tax_classes_names(), array_flip( $this->additional_tax_classes ) );
+            $tax_classes .= "\n" . join( "\n", $new_tax_classes);
+        }
+        
+        return $tax_classes;
     }
     
 }
