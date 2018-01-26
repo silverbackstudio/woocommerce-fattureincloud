@@ -80,6 +80,8 @@ class WC_Integration_FattureInCloud extends WC_Integration {
         
         add_filter( 'option_woocommerce_tax_classes', array( $this, 'append_tax_classes' ) );
         
+        add_action( 'woocommerce_after_checkout_validation', array( $this, 'validate_checkout') , 10, 2);	
+        
 	}
 	/**
 	 * Initialize integration settings form fields.
@@ -272,23 +274,26 @@ class WC_Integration_FattureInCloud extends WC_Integration {
 
     public function billing_fields( $fields ){
     
+    	$fields['billing_company']['class'] = array( 'form-row-first' );
+    
          $new_fields = array( 
          	'billing_company_tax_code' => array(
             	'label'     	=> __( 'Company Tax Code', 'woocommerce-fattureincloud' ),
     	    	'placeholder'   => _x('IT012345678910', 'vat id placeholder', 'woocommerce-fattureincloud'),
     	    	'required'  	=> false,
-    	    	'class'     	=> array( 'form-row-first' ),
+    	    	'class'     	=> array( 'form-row-last' ),
     		    'clear'     	=> true
     		),
          	'billing_fiscal_code' => array(
             	'label'     	=> __( 'Fiscal Code', 'woocommerce-fattureincloud' ),
     	    	'placeholder'   => _x('ABCZXY00A00A000N', 'fiscal code placeholder', 'woocommerce-fattureincloud'),
     	    	'required'  	=> false,
-    	    	'class'     	=> array( 'form-row-last' ),
+    	    	'class'     	=> array( 'form-row-wide' ),
     		    'clear'     	=> true
     		)
          );
-    	
+         
+
     	$fields = Utils::keyInsert($fields, $new_fields, 'billing_company' );
     	
     	return $fields;	
@@ -348,6 +353,17 @@ class WC_Integration_FattureInCloud extends WC_Integration {
 		
 		return $actions;
 	}    
+
+	public function validate_checkout( $data,$errors ){
+		
+		if( !empty($data['billing_company']) && empty($data['billing_company_tax_code']) ) {
+        	$errors->add( 'required-field', __( '<strong>Tax code</strong> is required when Company name is specified', 'woocommerce-fattureincloud' ));
+		}
+		
+		if( empty($data['billing_company']) && empty($data['billing_fiscal_code']) ) {
+        	$errors->add( 'required-field', __( '<strong>Fiscal code</strong> is required when no company name is specified', 'woocommerce-fattureincloud' ));
+		}		
+	}
 
 	public function generate_invoice_action() { 
 	    
