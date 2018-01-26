@@ -26,6 +26,9 @@ class WC_Integration_FattureInCloud extends WC_Integration {
 	public $default_tax_class = 0;
 	public $additional_tax_classes;
 	public $generate_on_status = array();
+	
+	public $logger;
+	
 	public $debug = false;       
     
     protected $client;
@@ -51,6 +54,8 @@ class WC_Integration_FattureInCloud extends WC_Integration {
 		$this->additional_tax_classes    = $this->get_option( 'additional_tax_classes' );
 		$this->generate_on_status    = (array)$this->get_option( 'generate_on_status' );
 		$this->debug            = $this->get_option( 'debug' );
+		
+		$this->logger = wc_get_logger();
 		
 		$this->client = new FattureInCloud\Client( $this->api_uid, $this->api_key );		
 		
@@ -183,6 +188,8 @@ class WC_Integration_FattureInCloud extends WC_Integration {
 	
     public function generate_invoice( $order_id, $order = null ) {
     
+    	$logger_context = array( 'source' => 'woocommerce-fattureincloud' );
+    
         $order = wc_get_order( $order ?: $order_id );
         
         if( false === $order ) {
@@ -193,11 +200,12 @@ class WC_Integration_FattureInCloud extends WC_Integration {
 
     	if ( ! $invoice_id ) {
     
-    		$payment_date =  FattureInCloud\Date::createFromMutable( $order->get_date_paid() );
+    		$payment_date =  FattureInCloud\Date::createFromMutable( $order->get_date_completed() );
+    		$expire_date =  FattureInCloud\Date::createFromMutable( $order->get_date_completed() );
 
     		$invoicePayment = new Pagamento(
     			array(
-    				'data_scadenza' => $payment_date,
+    				'data_scadenza' => $expire_date,
     				'importo' => 'auto',
     				'data_saldo' => $payment_date,
     			)
@@ -251,7 +259,9 @@ class WC_Integration_FattureInCloud extends WC_Integration {
     			$id_fattura = $result->new_id;
     			$order->add_meta_data( 'fattureincloud_invoice_id', $id_fattura, true );
     			$order->save_meta_data();
-    		} else {
+    		} elseif( !empty( $result->error ) ) {
+				$this->logger->error( $result->error, $logger_context );
+				var_dump($result);
     		    return false;
     		}
     
@@ -324,7 +334,7 @@ class WC_Integration_FattureInCloud extends WC_Integration {
 		
 		return $actions;
         
-    }
+    }	
     
 	public function user_orders_actions($actions, $order) {
 	    
@@ -362,12 +372,12 @@ class WC_Integration_FattureInCloud extends WC_Integration {
                 wp_die( esc_html__( 'Invoice already generated', 'woocommerce-fattureincloud' ) );
         	}
         	
-        	if( $this->generate_invoice( $order_id ) ) {
-        	    wp_safe_redirect( wp_get_referer() ? wp_get_referer() : admin_url( 'edit.php?post_type=shop_order' ) );
-		        exit;
-        	} else {
-        	    wp_die( esc_html__( 'Error generating invoice, please try later or notify system administrator', 'woocommerce-fattureincloud' ) );
+        	if( ! $this->generate_invoice( $order_id ) ) {
+        		wp_die( esc_html__( 'Error generating invoice, please try later or notify system administrator', 'woocommerce-fattureincloud' ) );
         	}
+        	
+        	wp_safe_redirect( wp_get_referer() ? wp_get_referer() : admin_url( 'edit.php?post_type=shop_order' ) );
+			exit;
         	
 		} else {
 		    wp_die( __( 'You do not have sufficient permissions to do this.', 'woocommerce-fattureincloud' ) );
@@ -385,7 +395,15 @@ class WC_Integration_FattureInCloud extends WC_Integration {
             )
         );
 	    
-		if ( $order_id && current_user_can( 'view_order', $order_id )  && check_admin_referer( 'woocommerce-fattureincloud-invoice-dl' ) ) {
+		if ( 
+			$order_id 
+		     && ( 
+		     	current_user_can( 'manage_woocommerce_orders' ) 
+		     	|| current_user_can( 'edit_shop_orders' ) 
+		     	|| current_user_can( 'view_order', $order_id ) 
+		     ) 
+			 && check_admin_referer( 'woocommerce-fattureincloud-invoice-dl' ) 
+		   ) {
 			$order  = wc_get_order( $order_id );
 
 			if ( ! $order ) {
