@@ -54,3 +54,12 @@ function add_integration( $integrations ) {
 }
 
 
+add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\\admin_scripts' );
+
+/**
+ * Register admin scripts and styles.
+ */
+function admin_scripts() {
+	wp_enqueue_style( 'woocommerce-fattueincloud-admin', plugins_url( '/assets/css/admin.css', __FILE__ ), false, '1.0.0' );
+}
+

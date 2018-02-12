@@ -1,0 +1,7 @@
+.widefat .column-wc_actions a.invoice-generate::after {
+    content: "\f495";
+}
+
+.widefat .column-wc_actions a.invoice-download::after {
+    content: "\f316";
+}
