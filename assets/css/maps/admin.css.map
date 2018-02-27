@@ -1,0 +1,1 @@
+{"version":3,"sources":["admin.scss"],"names":[],"mappings":"AAAA;EACI,iBAAgB,EACnB;;AAED;EACI,iBAAgB,EACnB","file":"../admin.css","sourcesContent":[".widefat .column-wc_actions a.invoice-generate::after {\n    content: \"\\f495\";\n}\n\n.widefat .column-wc_actions a.invoice-download::after {\n    content: \"\\f316\";\n}"]}

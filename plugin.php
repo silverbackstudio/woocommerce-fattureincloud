@@ -30,8 +30,8 @@ use Svbk\FattureInCloud\Struct\DocNuovoPagamento as Pagamento;
  */
 function init() {
 	load_plugin_textdomain( 'woocommerce-fattureincloud', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
-	
-	if ( !class_exists( '\WC_Integration'  ) ) { 
+
+	if ( ! class_exists( '\WC_Integration' ) ) {
 		return;
 	}
 
@@ -39,12 +39,11 @@ function init() {
 		include_once 'includes/class-wc-integration-fattureincloud.php';
 	}
 
-	add_filter( 'woocommerce_integrations', __NAMESPACE__ . '\\add_integration'  );	
-	
+	add_filter( 'woocommerce_integrations', __NAMESPACE__ . '\\add_integration' );
+
 }
 
 add_action( 'plugins_loaded', __NAMESPACE__ . '\\init' );
-
 /**
  * Add a new integration to WooCommerce.
  */
@@ -60,6 +59,13 @@ add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\\admin_scripts' );
  * Register admin scripts and styles.
  */
 function admin_scripts() {
-	wp_enqueue_style( 'woocommerce-fattueincloud-admin', plugins_url( '/assets/css/admin.css', __FILE__ ), false, '1.0.0' );
+	wp_enqueue_style( 'woocommerce-fattureincloud-admin', plugin_url( '/assets/css/admin.css' ), false, '1.0.0' );
 }
 
+function plugin_url( $path ) {
+	return plugins_url( $path, __FILE__ );
+}
+
+function plugin_dir() {
+	return plugin_dir_path( __FILE__ );
+}

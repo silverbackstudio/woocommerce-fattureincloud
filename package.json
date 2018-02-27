@@ -1,0 +1,27 @@
+{
+  "name": "woocommerce-fattureincloud",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/silverbackstudio/woocommerce-fattureincloud.git"
+  },
+  "author": "Brando Meniconi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/silverbackstudio/woocommerce-fattureincloud/issues"
+  },
+  "homepage": "https://github.com/silverbackstudio/woocommerce-fattureincloud#readme",
+  "devDependencies": {
+    "autoprefixer": "^8.0.0",
+    "gulp": "^4.0.0",
+    "gulp-postcss": "^7.0.1",
+    "gulp-sass": "^3.1.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "postcss-object-fit-images": "^1.1.2"
+  }  
+}

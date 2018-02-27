@@ -12,21 +12,16 @@
 
 	<exclude-pattern type="relative">^/tests/*</exclude-pattern>
 	<exclude-pattern type="relative">^/vendor/*</exclude-pattern>
+	<exclude-pattern >*/node_modules/*</exclude-pattern>
 
 	<!-- Only check the PHP files. JS files are checked separately with JSCS and JSHint. -->
-	<arg name="extensions" value="php,js"/>
+	<arg name="extensions" value="php, js"/>
 	
 	<!-- Check all files in this directory and the directories below it. -->
 	<file>.</file>
 
 	<!-- Include the WordPress ruleset, with exclusions. -->
 	<rule ref="WordPress">
-		<exclude name="WordPress.Files.FileName.InvalidClassFileName" />
-		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
-		<exclude name="WordPress.NamingConventions.ValidVariableName.MemberNotSnakeCase" />
-		<exclude name="WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar" />
-		<exclude name="WordPress.NamingConventions.ValidVariableName.NotSnakeCase" />
-		<exclude name="WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid" />		
 		<exclude name="WordPress.VIP" />
 	</rule>
 
@@ -47,7 +42,4 @@
 		</properties>
 	</rule>
 
-	<!-- Include sniffs for PHP cross-version compatibility. -->
-	<config name="testVersion" value="5.6-99.0"/>
-	<rule ref="PHPCompatibility"/>
 </ruleset>
