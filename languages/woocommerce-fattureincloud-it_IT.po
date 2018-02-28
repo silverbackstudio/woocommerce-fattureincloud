@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Restrict Content Pro - Fatture In Cloud\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-27 17:11+0000\n"
-"PO-Revision-Date: 2018-02-27 17:13+0000\n"
+"PO-Revision-Date: 2018-02-28 08:16+0000\n"
 "Last-Translator: SilverbackStudio <test-email-vdt@silverbackstudio.it>\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -95,15 +95,17 @@ msgstr ""
 
 #: includes/class-wc-integration-fattureincloud.php:171
 msgid "Fiscal Code Calculator"
-msgstr ""
+msgstr "Calcolatore codice fiscale"
 
 #: includes/class-wc-integration-fattureincloud.php:173
 msgid "Enable Fiscal Code Calculator"
-msgstr ""
+msgstr "Mostra il calcolatore di codice "
 
 #: includes/class-wc-integration-fattureincloud.php:175
 msgid "Show the calculator to allow users to calculate their fiscal code."
 msgstr ""
+"Mostra il calcolatore nel checkout, per permettere a gli utenti di calcolare "
+"il proprio codice fiscale"
 
 #: includes/class-wc-integration-fattureincloud.php:178
 msgid "Debug Log"
