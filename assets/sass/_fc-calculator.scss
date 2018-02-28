@@ -1,0 +1,100 @@
+#billing_fiscal_code_field {
+    position: relative;
+    
+    input[type="text"] {
+        padding-right: 7em;
+    }
+    
+    button {
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+        box-shadow: none;
+        font-size: .9em;
+        padding: .4em 1em;
+        border-radius: 4px;
+    }
+}
+
+#fiscal-code-calculator-container {
+    position: relative;
+
+    button.close {
+        position: absolute;
+        top: 8px;
+        right: 10px;
+        font-size: .8em;
+        background: none;
+        box-shadow: none;
+        color: #000;
+        padding: 0;
+        z-index: 1;
+        
+        &:before {
+            font-family: "icons-set";
+            content: "\e909";
+            vertical-align: middle;
+            margin-right: 5px;
+            display: inline-block;
+            font-size: 1.2em;
+        }
+    }
+}
+
+#fiscal-code-calculator {
+    background: #f3f3f3;
+    padding: 15px;
+    position: relative;
+    padding-top: 5px;
+    
+    label {
+        margin: 20px 0 5px;
+    }
+    
+    .select2 {
+        min-width: 250px;
+    }
+    
+    input[type="radio"] {
+        vertical-align: middle;
+        margin-left: 10px;
+        
+        &:first-of-type {
+            margin-left: 0;
+        }
+        
+        + label {
+            font-size: .9em;
+            margin-top: 0;
+            font-weight: normal;
+            line-height: 1.5em;
+        }
+    }
+    
+    .date-fields {
+        clear: both;
+        
+        label {
+            display: none;
+        }
+        
+        &:after {
+            @include clearfix();
+            @include clearfix-after();
+        }
+        
+        input[type="number"] {
+            max-width: 80px;
+            float: left;
+            margin-right: 3px;
+        }
+    }
+    
+    button[type="submit"] {
+        display: block;
+        margin: 30px 0 10px;
+        font-size: 1em;
+        padding: .6em 2em;
+        font-size: .9em;
+    }
+}

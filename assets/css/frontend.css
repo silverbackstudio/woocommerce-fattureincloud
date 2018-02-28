@@ -1,2 +1,80 @@
+#billing_fiscal_code_field {
+  position: relative; }
+  #billing_fiscal_code_field input[type="text"] {
+    padding-right: 7em; }
+  #billing_fiscal_code_field button {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    box-shadow: none;
+    font-size: .9em;
+    padding: .4em 1em;
+    border-radius: 4px; }
+
+#fiscal-code-calculator-container {
+  position: relative; }
+  #fiscal-code-calculator-container button.close {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    font-size: .8em;
+    background: none;
+    box-shadow: none;
+    color: #000;
+    padding: 0;
+    z-index: 1; }
+    #fiscal-code-calculator-container button.close:before {
+      font-family: "icons-set";
+      content: "\e909";
+      vertical-align: middle;
+      margin-right: 5px;
+      display: inline-block;
+      font-size: 1.2em; }
+
+#fiscal-code-calculator {
+  background: #f3f3f3;
+  padding: 15px;
+  position: relative;
+  padding-top: 5px; }
+  #fiscal-code-calculator label {
+    margin: 20px 0 5px; }
+  #fiscal-code-calculator .select2 {
+    min-width: 250px; }
+  #fiscal-code-calculator input[type="radio"] {
+    vertical-align: middle;
+    margin-left: 10px; }
+    #fiscal-code-calculator input[type="radio"]:first-of-type {
+      margin-left: 0; }
+    #fiscal-code-calculator input[type="radio"] + label {
+      font-size: .9em;
+      margin-top: 0;
+      font-weight: normal;
+      line-height: 1.5em; }
+  #fiscal-code-calculator .date-fields {
+    clear: both; }
+    #fiscal-code-calculator .date-fields label {
+      display: none; }
+    #fiscal-code-calculator .date-fields:after {
+      content: "";
+      display: table;
+      table-layout: fixed;
+      clear: both; }
+    #fiscal-code-calculator .date-fields input[type="number"] {
+      max-width: 80px;
+      float: left;
+      margin-right: 3px; }
+  #fiscal-code-calculator button[type="submit"] {
+    display: block;
+    margin: 30px 0 10px;
+    font-size: 1em;
+    padding: .6em 2em;
+    font-size: .9em; }
+
+@font-face {
+  font-family: "icons-set";
+  src: url(../icons/fonts/icons-set.eot);
+  src: url(../icons/fonts/icons-set.svg);
+  src: url(../icons/fonts/icons-set.ttf);
+  src: url(../icons/fonts/icons-set.woff); }
 
 /*# sourceMappingURL=maps/frontend.css.map */

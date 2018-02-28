@@ -1,0 +1,98 @@
+@font-face {
+  font-family: 'icons-set';
+  src:  url('fonts/icons-set.eot?ya1ckt');
+  src:  url('fonts/icons-set.eot?ya1ckt#iefix') format('embedded-opentype'),
+    url('fonts/icons-set.ttf?ya1ckt') format('truetype'),
+    url('fonts/icons-set.woff?ya1ckt') format('woff'),
+    url('fonts/icons-set.svg?ya1ckt#icons-set') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icons-set' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-spinner:before {
+  content: "\e917";
+}
+.icon-whatsapp:before {
+  content: "\e915";
+}
+.icon-link:before {
+  content: "\e914";
+}
+.icon-add-outline:before {
+  content: "\e900";
+}
+.icon-add-solid:before {
+  content: "\e901";
+}
+.icon-checkmark:before {
+  content: "\e902";
+}
+.icon-checkmark-outline:before {
+  content: "\e903";
+}
+.icon-cheveron-down:before {
+  content: "\e904";
+}
+.icon-cheveron-left:before {
+  content: "\e905";
+}
+.icon-cheveron-right:before {
+  content: "\e906";
+}
+.icon-cheveron-up:before {
+  content: "\e907";
+}
+.icon-close-outline:before {
+  content: "\e908";
+}
+.icon-close-solid:before {
+  content: "\e909";
+}
+.icon-download:before {
+  content: "\e90a";
+}
+.icon-exclamation-outline:before {
+  content: "\e90b";
+}
+.icon-exclamation-solid:before {
+  content: "\e90c";
+}
+.icon-information-outline:before {
+  content: "\e90d";
+}
+.icon-information-solid:before {
+  content: "\e90e";
+}
+.icon-lock-closed:before {
+  content: "\e90f";
+}
+.icon-lock-open:before {
+  content: "\e910";
+}
+.icon-notifications:before {
+  content: "\e911";
+}
+.icon-question:before {
+  content: "\e912";
+}
+.icon-trash:before {
+  content: "\e916";
+}
+.icon-view-show:before {
+  content: "\e913";
+}
