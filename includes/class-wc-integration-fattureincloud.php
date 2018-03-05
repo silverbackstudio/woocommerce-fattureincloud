@@ -118,7 +118,13 @@ if ( ! class_exists( __NAMESPACE__ . '\\WC_Integration_FattureInCloud' ) ) :
 		 */
 		public function init_form_fields() {
 
-			$wallets = array( '' => __( '-- Auto Select --', 'woocommerce-fattureincloud' ) ) + wp_list_pluck( $this->getInfo( 'lista_conti' ), 'nome_conto', 'id' );
+			$lista_conti = $this->getInfo( 'lista_conti' );
+			
+			if( $lista_conti ) {
+				$wallets = array( '' => __( '-- Auto Select --', 'woocommerce-fattureincloud' ) ) + wp_list_pluck( $lista_conti, 'nome_conto', 'id' );
+			} else {
+				$wallets = array();
+			}
 
 			$this->form_fields = array(
 				'api_uid' => array(
@@ -535,12 +541,14 @@ if ( ! class_exists( __NAMESPACE__ . '\\WC_Integration_FattureInCloud' ) ) :
 
 			$tax_classes = array();
 
-			foreach ( $liste_iva as $aliquota_iva ) {
-				$tax_classes[ $aliquota_iva['cod_iva'] ] = sprintf(
-					$aliquota_iva['descrizione_iva'] ? '%s' : __( '%2$s%% VAT', 'woocommerce-fattureincloud' ),
-					$aliquota_iva['descrizione_iva'],
-					$aliquota_iva['valore_iva']
-				);
+			if( $liste_iva ) {
+				foreach ( $liste_iva as $aliquota_iva ) {
+					$tax_classes[ $aliquota_iva['cod_iva'] ] = sprintf(
+						$aliquota_iva['descrizione_iva'] ? '%s' : __( '%2$s%% VAT', 'woocommerce-fattureincloud' ),
+						$aliquota_iva['descrizione_iva'],
+						$aliquota_iva['valore_iva']
+					);
+				}
 			}
 
 			return $tax_classes;
