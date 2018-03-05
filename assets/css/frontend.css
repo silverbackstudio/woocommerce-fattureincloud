@@ -1,11 +1,12 @@
+@import url(../icons/style.css);
 #billing_fiscal_code_field {
   position: relative; }
   #billing_fiscal_code_field input[type="text"] {
     padding-right: 7em; }
   #billing_fiscal_code_field button {
     position: absolute;
-    bottom: 5px;
-    right: 5px;
+    bottom: .4em;
+    right: .4em;
     box-shadow: none;
     font-size: .9em;
     padding: .4em 1em;
@@ -67,14 +68,7 @@
     display: block;
     margin: 30px 0 10px;
     font-size: 1em;
-    padding: .6em 2em;
+    padding: .5em 2em;
     font-size: .9em; }
-
-@font-face {
-  font-family: "icons-set";
-  src: url(../icons/fonts/icons-set.eot);
-  src: url(../icons/fonts/icons-set.svg);
-  src: url(../icons/fonts/icons-set.ttf);
-  src: url(../icons/fonts/icons-set.woff); }
 
 /*# sourceMappingURL=maps/frontend.css.map */
