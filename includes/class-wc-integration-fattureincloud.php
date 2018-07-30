@@ -77,6 +77,10 @@ if ( ! class_exists( __NAMESPACE__ . '\\WC_Integration_FattureInCloud' ) ) :
 			add_filter( 'woocommerce_admin_order_actions', array( $this, 'admin_order_actions' ), 10, 2 );
 			add_filter( 'woocommerce_my_account_my_orders_actions', array( $this, 'user_orders_actions' ), 10, 2 );
 
+			
+			add_action( 'woocommerce_admin_order_data_after_billing_address', array( $this, 'display_admin_order_meta'), 10, 1 );
+			add_action( 'woocommerce_process_shop_order_meta', array( $this, 'save_admin_order_meta' ), 45, 1 );
+
 			add_action( 'wp_ajax_woocommerce_fattureincloud_gen_invoice', array( $this, 'generate_invoice_action' ) );
 			add_action( 'wp_ajax_woocommerce_fattureincloud_dl_invoice', array( $this, 'download_invoice_action' ) );
 
@@ -385,6 +389,33 @@ if ( ! class_exists( __NAMESPACE__ . '\\WC_Integration_FattureInCloud' ) ) :
 			return $actions;
 
 		}
+		
+		public function display_admin_order_meta($order){
+			
+			woocommerce_wp_text_input(
+					array(
+						'id'    => '_fattureincloud_invoice_id',
+						'label' => __( 'FattureInCloud Invoice ID', 'woocommerce-fattureincloud' ),
+						'value' => $order->get_meta( 'fattureincloud_invoice_id' ),
+					)
+				);			
+		}		
+
+		public function save_admin_order_meta( $order_id ){
+			
+			if ( ! isset( $_POST[ '_fattureincloud_invoice_id' ] ) ) {
+				return;
+			}
+		
+			$order = wc_get_order( $order_id );
+			
+			if ( $order->get_meta( 'fattureincloud_invoice_id' ) !==  $_POST[ '_fattureincloud_invoice_id' ] ) {
+				$order->update_meta_data( 'fattureincloud_invoice_id', wc_clean( $_POST[ '_fattureincloud_invoice_id' ] ) );
+				$order->save();
+			}
+			
+
+		}		
 
 		public function user_orders_actions( $actions, $order ) {
 
