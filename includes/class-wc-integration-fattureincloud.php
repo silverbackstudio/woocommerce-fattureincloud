@@ -334,7 +334,7 @@ if ( ! class_exists( __NAMESPACE__ . '\\WC_Integration_FattureInCloud' ) ) :
 					 'clear'         => true,
 				 ),
 				 'billing_fiscal_code' => array(
-					 'label'         => __( 'Fiscal Code', 'woocommerce-fattureincloud' ),
+					 'label'         => __( 'Fiscal Code', 'woocommerce-fattureincloud' ) . '<span class="notice">&nbsp;' . __('(required if no VAT is specified)', 'woocommerce-fattureincloud' ) . '</span>',
 					 'placeholder'   => _x( 'ABCZXY00A00A000N', 'fiscal code placeholder', 'woocommerce-fattureincloud' ),
 					 'required'      => false,
 					 'type'          => 'fiscalcode',
@@ -342,12 +342,12 @@ if ( ! class_exists( __NAMESPACE__ . '\\WC_Integration_FattureInCloud' ) ) :
 					 'clear'         => true,
 				 ),
 			 );
-
+			 
 			$fields = Utils::keyInsert( $fields, $new_fields, 'billing_company' );
 
 			return $fields;
 		}
-
+		
 		public function admin_billing_fields( $fields ) {
 
 			 $new_fields = array(
