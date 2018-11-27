@@ -4,6 +4,8 @@ namespace Svbk\WP\Plugins\WooCommerce\FattureInCloud;
 
 use WC_Integration;
 use Svbk\WP\Helpers\Lists\Utils;
+use Svbk\WP\Helpers\Assets\Style;
+use Svbk\WP\Helpers\Assets\Script;
 use Svbk\FattureInCloud;
 use Svbk\FattureInCloud\Struct\DocNuovoArticolo as Articolo;
 use Svbk\FattureInCloud\Struct\DocNuovoRequest as Fattura;
@@ -99,12 +101,12 @@ if ( ! class_exists( __NAMESPACE__ . '\\WC_Integration_FattureInCloud' ) ) :
 		 */
 		public function frontend_scripts() {
 
-			wp_enqueue_style( 'woocommerce-fattureincloud', plugin_url( '/assets/css/frontend.css' ) );
-			wp_enqueue_script( 'woocommerce-fattureincloud', plugin_url( '/assets/js/frontend.js' ), array( 'jquery' ), '1.0.0', true );
+			Style::enqueue( 'woocommerce-fattureincloud', plugin_url( '/assets/css/frontend.css' ), [ 'source' => false, ] );
+			Script::enqueue( 'woocommerce-fattureincloud', plugin_url( '/assets/js/frontend.js' ), [ 'source' => false, 'deps' => array( 'jquery' ), 'version' => '1.0.0', 'in_footer' => true, 'defer' => true, 'async' => true ] );
 
 			if ( is_checkout() && $this->enable_fiscal_code_calculator ) {
-				wp_enqueue_script( 'codice-fiscale', 'https://cdn.jsdelivr.net/npm/codice-fiscale-js@1.3.0/dist/codice.fiscale.umd.min.js', array(), '1.3.0', true );
-				wp_enqueue_script( 'fiscal-code-calculator', plugin_url( 'assets/js/fiscal_code_calculator.js' ), array( 'jquery' ), '1.0.0', true );
+				Script::enqueue( 'codice-fiscale-js', 'dist/codice.fiscale.umd.min.js', [  'version' => '1.3.0', 'in_footer' => true ] );
+				Script::enqueue( 'fiscal-code-calculator', plugin_url( 'assets/js/fiscal_code_calculator.js' ), [ 'source' => false, 'deps' => array( 'codice-fiscale-js', 'jquery' ), 'version' => '1.0.0', 'in_footer' => true, 'defer' => true, 'async' => true ] );
 				wp_localize_script(
 					'fiscal-code-calculator', 'fiscalCodeCalculator',
 					array(

@@ -18,6 +18,7 @@ Text Domain: woocommerce-fattureincloud
 namespace Svbk\WP\Plugins\WooCommerce\FattureInCloud;
 
 use Svbk\WP\Helpers\Lists\Utils;
+use Svbk\WP\Helpers\Assets\Style;
 use Svbk\FattureInCloud;
 use Svbk\FattureInCloud\Struct\DocNuovoArticolo as Articolo;
 use Svbk\FattureInCloud\Struct\DocNuovoRequest as Fattura;
@@ -59,7 +60,7 @@ add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\\admin_scripts' );
  * Register admin scripts and styles.
  */
 function admin_scripts() {
-	wp_enqueue_style( 'woocommerce-fattureincloud-admin', plugin_url( '/assets/css/admin.css' ), false, '1.0.0' );
+	Style::enqueue( 'woocommerce-fattureincloud-admin', plugin_url( '/assets/css/admin.css' ), [ 'source' => false, 'version' => '1.0.0' ] );
 }
 
 function plugin_url( $path ) {
