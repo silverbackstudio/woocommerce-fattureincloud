@@ -101,20 +101,38 @@ if ( ! class_exists( __NAMESPACE__ . '\\WC_Integration_FattureInCloud' ) ) :
 		 */
 		public function frontend_scripts() {
 
-			Style::enqueue( 'woocommerce-fattureincloud', plugin_url( '/assets/css/frontend.css' ), [ 'source' => false, ] );
-			Script::enqueue( 'woocommerce-fattureincloud', plugin_url( '/assets/js/frontend.js' ), [ 'source' => false, 'deps' => array( 'jquery' ), 'version' => '1.0.0', 'in_footer' => true, 'defer' => true, 'async' => true ] );
+			Style::enqueue( 'woocommerce-fattureincloud', plugin_url( '/assets/css/frontend.css' ), [ 'source' => false, 'condition' => is_checkout() ] );
 
-			if ( is_checkout() && $this->enable_fiscal_code_calculator ) {
-				Script::enqueue( 'codice-fiscale-js', 'dist/codice.fiscale.umd.min.js', [  'version' => '1.3.0', 'in_footer' => true ] );
-				Script::enqueue( 'fiscal-code-calculator', plugin_url( 'assets/js/fiscal_code_calculator.js' ), [ 'source' => false, 'deps' => array( 'codice-fiscale-js', 'jquery' ), 'version' => '1.0.0', 'in_footer' => true, 'defer' => true, 'async' => true ] );
-				wp_localize_script(
-					'fiscal-code-calculator', 'fiscalCodeCalculator',
-					array(
-						'errorPrefix' => __( 'Please fill in the field:', 'woocommerce-fattureincloud' ),
-						'birthCityPlaceholder' => __( '- Select a city -', 'woocommerce-fattureincloud' ),
-					)
-				);
-			}
+			Script::enqueue( 'codice-fiscale-js', 'dist/codice.fiscale.var.min.js', 
+				[  
+					'version' => '1.3', 
+					'in_footer' => true, 
+					'defer' => true, 
+					'async' => true,
+					'condition' => is_checkout() && $this->enable_fiscal_code_calculator
+				] 
+			);
+				
+			Script::enqueue( 'woocommerce-fattureincloud', plugin_url( '/assets/js/frontend.js' ), 
+				[ 
+					'source' => false, 
+					'deps' => array( 'codice-fiscale-js', 'jquery' ), 
+					'version' => '1.0.0', 
+					'in_footer' => true, 
+					'defer' => true, 
+					'async' => true,
+					'condition' => is_checkout()
+				] 
+			);
+			
+			wp_localize_script(
+				'woocommerce-fattureincloud', 'fiscalCodeCalculator',
+				array(
+					'errorPrefix' => __( 'Please fill in the field:', 'woocommerce-fattureincloud' ),
+					'birthCityPlaceholder' => __( '- Select a city -', 'woocommerce-fattureincloud' ),
+				)
+			);
+			
 
 		}
 
