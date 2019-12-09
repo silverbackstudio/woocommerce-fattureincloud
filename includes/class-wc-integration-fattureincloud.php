@@ -203,6 +203,13 @@ if ( ! class_exists( __NAMESPACE__ . '\\WC_Integration_FattureInCloud' ) ) :
 					'default'           => 1,
 					'description'       => __( 'Show the calculator to allow users to calculate their fiscal code.', 'woocommerce-fattureincloud' ),
 				),
+				'digital_invoicing' => array(
+					'title'             => __( 'Digital Invoicing (Italy)', 'woocommerce-fattureincloud' ),
+					'type'              => 'checkbox',
+					'label'             => __( 'Enable digital invoices', 'woocommerce-fattureincloud' ),
+					'default'           => 'yes',
+					'description'       => __( 'Mark all invoices as digital and enable the required fields', 'woocommerce-fattureincloud' ),
+				),
 				'debug' => array(
 					'title'             => __( 'Debug Log', 'woocommerce-fattureincloud' ),
 					'type'              => 'checkbox',
@@ -314,7 +321,6 @@ if ( ! class_exists( __NAMESPACE__ . '\\WC_Integration_FattureInCloud' ) ) :
 					'indirizzo_cap' => $order->get_billing_postcode(),
 					'indirizzo_citta' => $order->get_billing_city(),
 					'indirizzo_provincia' => $order->get_billing_state(),
-					'piva' => $order->get_meta( '_billing_company_tax_code' ),
 					'cf' => $order->get_meta( '_billing_fiscal_code' ),
 					'valuta' => $order->get_currency(),
 					'paese_iso' => $order->get_billing_country(),
@@ -322,6 +328,17 @@ if ( ! class_exists( __NAMESPACE__ . '\\WC_Integration_FattureInCloud' ) ) :
 					'lista_pagamenti' => array( $invoice_payment ),
 					'prezzi_ivati' => wc_prices_include_tax(),
 				);
+
+				$invoice_data['PA'] = true;
+				$invoice_data['PA_tipo_cliente'] = 'B2B';
+
+				if ( $order->get_meta( '_billing_company_type' ) ) {
+					$invoice_data['piva'] = $order->get_meta( '_billing_company_tax_code' );
+					$invoice_data['PA_codice'] = $order->get_meta( '_billing_invoice_sdi_code' );
+					$invoice_data['PA_pec'] = $order->get_meta( '_billing_invoice_pec' );
+				} else {
+					$invoice_data['PA_codice'] = '0000000';
+				}
 
 				$new_invoice = new Fattura( $invoice_data );
 
@@ -345,27 +362,71 @@ if ( ! class_exists( __NAMESPACE__ . '\\WC_Integration_FattureInCloud' ) ) :
 
 			$fields['billing_company']['class'] = array( 'form-row-first' );
 
-			 $new_fields = array(
-				 'billing_company_tax_code' => array(
-					 'label'         => __( 'Company Tax Code', 'woocommerce-fattureincloud' ),
-					 'placeholder'   => _x( 'IT012345678910', 'vat id placeholder', 'woocommerce-fattureincloud' ),
-					 'required'      => false,
-					 'priority'		 => 30,
-					 'class'         => array( 'form-row-last' ),
-					 'clear'         => true,
-				 ),
-				 'billing_fiscal_code' => array(
-					 'label'         => __( 'Fiscal Code', 'woocommerce-fattureincloud' ) . '<span class="notice">&nbsp;' . __('(required if no VAT is specified)', 'woocommerce-fattureincloud' ) . '</span>',
-					 'placeholder'   => _x( 'ABCZXY00A00A000N', 'fiscal code placeholder', 'woocommerce-fattureincloud' ),
-					 'required'      => false,
-					 'type'          => 'fiscalcode',
-					 'priority'		 => 31,
-					 'class'         => array( 'form-row-wide' ),
-					 'clear'         => true,
-				 ),
+			 $invoice_fields = array(
+				'billing_company_type' => array(
+					'label'         => __( 'Billing Type', 'woocommerce-fattureincloud' ),
+					'required'      => true,
+					'priority'		 => 29,
+					'type' => 		'radio',
+					'options' => array(
+						'B2C' => __( 'Personal', 'woocommerce-fattureincloud' ),
+						'B2B' => __( 'Company', 'woocommerce-fattureincloud' )
+					),
+					'class'         => array( 'form-row-wide' ),
+					'clear'         => true,
+				),
+				'billing_fiscal_code' => array(
+					'label'         => __( 'Fiscal Code', 'woocommerce-fattureincloud' ) . '<span class="notice">&nbsp;' . __('(required if no VAT is specified)', 'woocommerce-fattureincloud' ) . '</span>',
+					'placeholder'   => _x( 'ABCZXY00A00A000N', 'fiscal code placeholder', 'woocommerce-fattureincloud' ),
+					'required'      => false,
+					'type'          => 'fiscalcode',
+					'priority'		 => 30,
+					'class'         => array( 'form-row-wide' ),
+					'clear'         => true,
+				),					 
+				'billing_company_tax_code' => array(
+					'label'         => __( 'Company Tax Code', 'woocommerce-fattureincloud' ),
+					'placeholder'   => _x( '012345678910', 'vat id placeholder', 'woocommerce-fattureincloud' ),
+					'required'      => false,
+					'priority'		 => 31,
+					'class'         => array( 'form-row-last' ),
+					'clear'         => true,
+				),
 			 );
-			 
-			$fields = Utils::keyInsert( $fields, $new_fields, 'billing_company' );
+
+			$fields = array_merge( $fields, $invoice_fields );
+
+			$digital_invoices_fields = array(
+				'billing_invoice_sdi_code' => array(
+					'label'         => __( 'SDI Invoice Code', 'woocommerce-fattureincloud' ),
+					'placeholder'   => _x( 'XXXXXXXXXX', 'billing fields placeholder', 'woocommerce-fattureincloud' ),
+					'required'      => false,
+					'priority'		 => 32,
+					'class'         => array( 'form-row-first' ),
+				),
+				'billing_invoice_pec' => array(
+					'label'         => __( 'PEC Address', 'woocommerce-fattureincloud' ),
+					'placeholder'   => _x( 'address@pec.it', 'billing fields placeholder', 'woocommerce-fattureincloud' ),
+					'required'      => false,
+					'priority'		 => 33,
+					'class'         => array( 'form-row-last' ),
+					'clear'         => true,
+				)
+			);
+
+			$fields = array_merge( $fields, $digital_invoices_fields );
+
+			$address_fields = array(
+				'address_1',
+				'city',
+				'postcode',
+				'state',
+				'country',
+			);
+
+			foreach( $address_fields as $address_field ){
+				$fields['billing_' . $address_field]['required'] = true;
+			}
 
 			return $fields;
 		}
@@ -373,6 +434,10 @@ if ( ! class_exists( __NAMESPACE__ . '\\WC_Integration_FattureInCloud' ) ) :
 		public function admin_billing_fields( $fields ) {
 
 			 $new_fields = array(
+				 'company_type' => array(
+					 'label'        => __( 'Company Type', 'woocommerce-fattureincloud' ),
+					 'show'  => true,
+				 ),
 				 'company_tax_code' => array(
 					 'label'        => __( 'Company Tax Code', 'woocommerce-fattureincloud' ),
 					 'show'  => true,
@@ -381,6 +446,14 @@ if ( ! class_exists( __NAMESPACE__ . '\\WC_Integration_FattureInCloud' ) ) :
 					 'label'        => __( 'Fiscal Code', 'woocommerce-fattureincloud' ),
 					 'show'  => true,
 				 ),
+				 'invoice_sdi_code' => array(
+					 'label'        => __( 'SDI Invoice Code', 'woocommerce-fattureincloud' ),
+					 'show'  => true,
+				 ),
+				 'invoice_pec' => array(
+					'label'        => __( 'PEC Address', 'woocommerce-fattureincloud' ),
+					'show'  => true,
+				),				 
 			 );
 
 			$fields = Utils::keyInsert( $fields, $new_fields, 'company' );
@@ -454,13 +527,32 @@ if ( ! class_exists( __NAMESPACE__ . '\\WC_Integration_FattureInCloud' ) ) :
 
 		public function validate_checkout( $data, $errors ) {
 
-			if ( ! empty( $data['billing_company'] ) && empty( $data['billing_company_tax_code'] ) ) {
-				$errors->add( 'required-field', __( '<strong>Tax code</strong> is required when Company name is specified', 'woocommerce-fattureincloud' ) );
+			$is_company = ! empty( $data['billing_company_type'] ) && ($data['billing_company_type'] === 'B2B');
+
+			if ( $is_company && empty( $data['billing_company'] ) ) {
+				$errors->add( 'required-field', __( '<strong>Company name</strong> is required for companies', 'woocommerce-fattureincloud' ) );
 			}
 
-			if ( empty( $data['billing_company'] ) && empty( $data['billing_fiscal_code'] ) ) {
-				$errors->add( 'required-field', __( '<strong>Fiscal code</strong> is required when no company name is specified', 'woocommerce-fattureincloud' ) );
+			if ( $is_company && empty( $data['billing_company_tax_code'] ) ) {
+				$errors->add( 'required-field', __( '<strong>Tax code</strong> is required for companies', 'woocommerce-fattureincloud' ) );
 			}
+
+			if ( !$is_company && empty( $data['billing_fiscal_code'] ) ) {
+				$errors->add( 'required-field', __( '<strong>Fiscal code</strong> is required for personal users', 'woocommerce-fattureincloud' ) );
+			}
+
+			if ( $is_company && empty( $data['billing_invoice_sdi_code'] ) && empty( $data['billing_invoice_pec'] ) ) {
+				$errors->add( 'required-field', __( '<strong>SDI Invoice Code</strong> or <strong>PEC Address</strong> is required for companies', 'woocommerce-fattureincloud' ) );
+			}	
+			
+			if ( !empty( $data['billing_fiscal_code'] ) && ! preg_match( '/^[A-Za-z]{6}[0-9L-Vl-v]{2}[A-Za-z]{1}[0-9L-Vl-v]{2}[A-Za-z]{1}[0-9L-vl-v]{3}[A-Za-z]{1}$/', $data['billing_fiscal_code'] ) ) {
+				$errors->add( 'validation', __( '<strong>Fiscal code</strong> is not valid', 'woocommerce-fattureincloud' ) );
+			}
+
+			if ( !empty( $data['billing_invoice_sdi_code'] ) && ! preg_match( '/^\w{7}$/', $data['billing_invoice_sdi_code'] ) ) {
+				$errors->add( 'validation', __( '<strong>SDI Invoice Code</strong> is not valid', 'woocommerce-fattureincloud' ) );
+			}			
+					
 		}
 
 		public function generate_invoice_action() {
