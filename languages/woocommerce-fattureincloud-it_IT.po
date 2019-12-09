@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Restrict Content Pro - Fatture In Cloud\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-09 13:08+0000\n"
-"PO-Revision-Date: 2019-12-09 13:18+0000\n"
+"POT-Creation-Date: 2019-12-09 14:34+0000\n"
+"PO-Revision-Date: 2019-12-09 14:38+0000\n"
 "Last-Translator: SilverbackStudio <webmaster@silverbackstudio.it>\n"
 "Language-Team: Italiano\n"
 "Language: it_IT\n"
@@ -22,23 +22,23 @@ msgstr "Fatture in Cloud"
 msgid "Manage WooCommerce order invoices with Fattureincloud"
 msgstr "Gestisci le fatture degli ordini con Fatture in Cloud"
 
-#: includes/class-wc-integration-fattureincloud.php:131
+#: includes/class-wc-integration-fattureincloud.php:132
 msgid "Please fill in the field:"
 msgstr "Per favore completa il campo:"
 
-#: includes/class-wc-integration-fattureincloud.php:132
+#: includes/class-wc-integration-fattureincloud.php:133
 msgid "- Select a city -"
 msgstr "- Seleziona una città - "
 
-#: includes/class-wc-integration-fattureincloud.php:148
+#: includes/class-wc-integration-fattureincloud.php:149
 msgid "-- Auto Select --"
 msgstr "-- Seleziona automaticamente --"
 
-#: includes/class-wc-integration-fattureincloud.php:155
+#: includes/class-wc-integration-fattureincloud.php:156
 msgid "API UID"
 msgstr "API UID"
 
-#: includes/class-wc-integration-fattureincloud.php:157
+#: includes/class-wc-integration-fattureincloud.php:158
 msgid ""
 "Enter with your API UID. You can find this at fattureincloud.it in the "
 "\"API\" left main menu."
@@ -46,11 +46,11 @@ msgstr ""
 "Inserisci la tua chiave API (API UID). La puoi trovare sul sito di "
 "fattureincloud.it nella voce \"API\" del menu a sinistra."
 
-#: includes/class-wc-integration-fattureincloud.php:162
+#: includes/class-wc-integration-fattureincloud.php:163
 msgid "API Key"
 msgstr "API Key"
 
-#: includes/class-wc-integration-fattureincloud.php:164
+#: includes/class-wc-integration-fattureincloud.php:165
 msgid ""
 "Enter with your API Key. You can find this at fattureincloud.it in the "
 "\"API\" left main menu."
@@ -58,81 +58,81 @@ msgstr ""
 "Inserisci la tua chiave API (API Key). La puoi trovare sul sito di "
 "fattureincloud.it nella voce \"API\" del menu a sinistra."
 
-#: includes/class-wc-integration-fattureincloud.php:169
+#: includes/class-wc-integration-fattureincloud.php:170
 msgid "Wallet"
 msgstr "Conto Pagamenti"
 
-#: includes/class-wc-integration-fattureincloud.php:171
+#: includes/class-wc-integration-fattureincloud.php:172
 msgid "Enter your default Wallet"
 msgstr "Inserisci il tuo conto predefinito"
 
-#: includes/class-wc-integration-fattureincloud.php:177
+#: includes/class-wc-integration-fattureincloud.php:178
 msgid "Default Tax Class"
 msgstr "Tipo di tassazione di default"
 
-#: includes/class-wc-integration-fattureincloud.php:179
+#: includes/class-wc-integration-fattureincloud.php:180
 msgid "Select the default tax class"
 msgstr "Imposta la tassazione di default"
 
-#: includes/class-wc-integration-fattureincloud.php:185
+#: includes/class-wc-integration-fattureincloud.php:186
 msgid "Additional Tax Classes"
 msgstr "Classi di tassazione aggiuntive"
 
-#: includes/class-wc-integration-fattureincloud.php:187
+#: includes/class-wc-integration-fattureincloud.php:188
 msgid "Add this tax classes to the Additional Tax Classes"
 msgstr ""
 "Seleziona le tipologie di tassazioni che vuoi aggiungere alle classi "
 "aggiuntive"
 
-#: includes/class-wc-integration-fattureincloud.php:193
+#: includes/class-wc-integration-fattureincloud.php:194
 msgid "Generate automatically on"
 msgstr "Genera automaticamente quando"
 
-#: includes/class-wc-integration-fattureincloud.php:197
+#: includes/class-wc-integration-fattureincloud.php:198
 msgid "Generate invoices automatically when order is on this statuses"
 msgstr ""
 "Genera automaticamente le fatture quando l'ordine raggiunge uno di questi "
 "stati"
 
-#: includes/class-wc-integration-fattureincloud.php:200
+#: includes/class-wc-integration-fattureincloud.php:201
 msgid "Fiscal Code Calculator"
 msgstr "Calcolatore codice fiscale"
 
-#: includes/class-wc-integration-fattureincloud.php:202
+#: includes/class-wc-integration-fattureincloud.php:203
 msgid "Enable Fiscal Code Calculator"
 msgstr "Mostra il calcolatore di codice "
 
-#: includes/class-wc-integration-fattureincloud.php:204
+#: includes/class-wc-integration-fattureincloud.php:205
 msgid "Show the calculator to allow users to calculate their fiscal code."
 msgstr ""
 "Mostra il calcolatore nel checkout, per permettere a gli utenti di calcolare "
 "il proprio codice fiscale"
 
-#: includes/class-wc-integration-fattureincloud.php:207
+#: includes/class-wc-integration-fattureincloud.php:208
 msgid "Digital Invoicing (Italy)"
 msgstr "Fatturazione Elettronica (Italia)"
 
-#: includes/class-wc-integration-fattureincloud.php:209
+#: includes/class-wc-integration-fattureincloud.php:210
 msgid "Enable digital invoices"
 msgstr "Emetti fatture elettroniche"
 
-#: includes/class-wc-integration-fattureincloud.php:211
+#: includes/class-wc-integration-fattureincloud.php:212
 msgid "Mark all invoices as digital and enable the required fields"
 msgstr "Emetti tutte le fatture come elettroniche e mostra i campi richiesti"
 
-#: includes/class-wc-integration-fattureincloud.php:214
+#: includes/class-wc-integration-fattureincloud.php:215
 msgid "Debug Log"
 msgstr "Log di Debug"
 
-#: includes/class-wc-integration-fattureincloud.php:216
+#: includes/class-wc-integration-fattureincloud.php:217
 msgid "Enable logging"
 msgstr "Abilita logging"
 
-#: includes/class-wc-integration-fattureincloud.php:218
+#: includes/class-wc-integration-fattureincloud.php:219
 msgid "Log events such as API requests"
 msgstr "Effettua il log degli eventi, ad esempio le richieste API"
 
-#: includes/class-wc-integration-fattureincloud.php:261
+#: includes/class-wc-integration-fattureincloud.php:262
 #, php-format
 msgid ""
 "Looks like you made a mistake with the %s field. Make sure it isn&apos;t "
@@ -140,201 +140,205 @@ msgid ""
 msgstr ""
 "C'è un errore nel campo %s. Assicurati che non sia più lungo di 20 caratteri."
 
-#: includes/class-wc-integration-fattureincloud.php:362
+#: includes/class-wc-integration-fattureincloud.php:374
 msgid "Billing Type"
 msgstr "Tipo Soggetto"
 
-#: includes/class-wc-integration-fattureincloud.php:367
+#: includes/class-wc-integration-fattureincloud.php:379
 msgid "Personal"
 msgstr "Persona fisica"
 
-#: includes/class-wc-integration-fattureincloud.php:368
+#: includes/class-wc-integration-fattureincloud.php:380
 msgid "Company"
 msgstr "Azienda"
 
-#: includes/class-wc-integration-fattureincloud.php:374
-#: includes/class-wc-integration-fattureincloud.php:425
+#: includes/class-wc-integration-fattureincloud.php:386
+#: includes/class-wc-integration-fattureincloud.php:456
 msgid "Fiscal Code"
 msgstr "Codice Fiscale"
 
-#: includes/class-wc-integration-fattureincloud.php:374
+#: includes/class-wc-integration-fattureincloud.php:386
 msgid "(required if no VAT is specified)"
 msgstr "(obbligatorio se non si specifica la Partita Iva)"
 
-#: includes/class-wc-integration-fattureincloud.php:375
+#: includes/class-wc-integration-fattureincloud.php:387
 msgctxt "fiscal code placeholder"
 msgid "ABCZXY00A00A000N"
 msgstr "ABCZXY00A00A000N"
 
-#: includes/class-wc-integration-fattureincloud.php:383
-#: includes/class-wc-integration-fattureincloud.php:421
+#: includes/class-wc-integration-fattureincloud.php:395
+#: includes/class-wc-integration-fattureincloud.php:452
 msgid "Company Tax Code"
 msgstr ""
 "Partita IVA\n"
 
-#: includes/class-wc-integration-fattureincloud.php:384
-msgctxt "vat id placeholder"
-msgid "IT012345678910"
-msgstr "IT012345678910"
-
 #: includes/class-wc-integration-fattureincloud.php:396
-#: includes/class-wc-integration-fattureincloud.php:429
+msgctxt "vat id placeholder"
+msgid "012345678910"
+msgstr "01234567890"
+
+#: includes/class-wc-integration-fattureincloud.php:410
+#: includes/class-wc-integration-fattureincloud.php:463
 msgid "SDI Invoice Code"
 msgstr "Codice Fatturazione Elettronica"
 
-#: includes/class-wc-integration-fattureincloud.php:397
+#: includes/class-wc-integration-fattureincloud.php:411
 msgctxt "billing fields placeholder"
 msgid "XXXXXXXXXX"
 msgstr "Codice Destinatario SDI (es. ABCDEFG) di 7 caratteri"
 
-#: includes/class-wc-integration-fattureincloud.php:403
-#: includes/class-wc-integration-fattureincloud.php:433
+#: includes/class-wc-integration-fattureincloud.php:417
+#: includes/class-wc-integration-fattureincloud.php:468
 msgid "PEC Address"
 msgstr "Indirizzo PEC"
 
-#: includes/class-wc-integration-fattureincloud.php:404
+#: includes/class-wc-integration-fattureincloud.php:418
 msgctxt "billing fields placeholder"
 msgid "address@pec.it"
 msgstr "indirizzo@pec.it"
 
-#: includes/class-wc-integration-fattureincloud.php:452
-#: includes/class-wc-integration-fattureincloud.php:499
+#: includes/class-wc-integration-fattureincloud.php:448
+msgid "Company Type"
+msgstr "Tipo soggetto:"
+
+#: includes/class-wc-integration-fattureincloud.php:487
+#: includes/class-wc-integration-fattureincloud.php:534
 msgid "Download Invoice"
 msgstr "Scarica Fattura"
 
-#: includes/class-wc-integration-fattureincloud.php:458
+#: includes/class-wc-integration-fattureincloud.php:493
 msgid "Generate Invoice"
 msgstr "Genera Fattura"
 
-#: includes/class-wc-integration-fattureincloud.php:472
+#: includes/class-wc-integration-fattureincloud.php:507
 msgid "FattureInCloud Invoice ID"
 msgstr "ID Fattura FattureinCloud"
 
-#: includes/class-wc-integration-fattureincloud.php:510
-msgid "<strong>Tax code</strong> is required when Company name is specified"
-msgstr ""
-"La <strong>Partita IVA</strong> è obbligatoria se si specifica una Ragione "
-"Sociale"
+#: includes/class-wc-integration-fattureincloud.php:547
+msgid "<strong>Company name</strong> is required for companies"
+msgstr "Il <strong>Nome Azienda</strong> è obbligatorio per le aziende"
 
-#: includes/class-wc-integration-fattureincloud.php:514
-msgid ""
-"<strong>Fiscal code</strong> is required when no company name is specified"
-msgstr ""
-"Il <strong>Codice Fiscale</strong> personale è obbligatorio se non si "
-"inserisce la Partita Iva"
+#: includes/class-wc-integration-fattureincloud.php:551
+msgid "<strong>Tax code</strong> is required for companies"
+msgstr "La <strong>Partita Iva</strong> è obbligatoria per le aziende"
 
-#: includes/class-wc-integration-fattureincloud.php:518
-msgid ""
-"<strong>SDI Invoice Code</strong> or <strong>PEC Address</strong> is "
-"required when company name is specified"
+#: includes/class-wc-integration-fattureincloud.php:555
+msgid "<strong>Fiscal code</strong> is required for personal users"
 msgstr ""
-"Sono richiesti o il <strong>Codice Fatturazione Elettronica</strong> o "
-"l'<strong>indirizzo PEC</strong> in caso di azienda"
+"Il <strong>Codice fiscale</strong> è obbligatorio per le persone fisiche"
 
-#: includes/class-wc-integration-fattureincloud.php:522
+#: includes/class-wc-integration-fattureincloud.php:559
 msgid "<strong>Fiscal code</strong> is not valid"
 msgstr "<strong>Codice Fiscale</strong> non è valido"
 
-#: includes/class-wc-integration-fattureincloud.php:526
+#: includes/class-wc-integration-fattureincloud.php:563
+msgid ""
+"<strong>SDI Invoice Code</strong> or <strong>PEC Address</strong> is "
+"required for companies"
+msgstr ""
+"Il <strong>Codice Fatturazione Elettronica</strong> o l'<strong>indirizzo "
+"PEC</strong> è obbligatorio per le aziende"
+
+#: includes/class-wc-integration-fattureincloud.php:567
 msgid "<strong>SDI Invoice Code</strong> is not valid"
 msgstr "<strong>Codice Fatturazione Elettronica</strong> non è valido"
 
-#: includes/class-wc-integration-fattureincloud.php:552
+#: includes/class-wc-integration-fattureincloud.php:593
 msgid "Invoice already generated"
 msgstr "Fattura già generata"
 
-#: includes/class-wc-integration-fattureincloud.php:556
+#: includes/class-wc-integration-fattureincloud.php:597
 msgid ""
 "Error generating invoice, please try later or notify system administrator"
 msgstr ""
 "Errore nella generazione della fattura, prova più tardi o contatta "
 "l'amministratore di sistema"
 
-#: includes/class-wc-integration-fattureincloud.php:563
+#: includes/class-wc-integration-fattureincloud.php:604
 msgid "You do not have sufficient permissions to do this."
 msgstr "Non hai permessi sufficienti per fare questa operazione."
 
-#: includes/class-wc-integration-fattureincloud.php:596
+#: includes/class-wc-integration-fattureincloud.php:637
 msgid ""
 "Invoice not yet available, please contact and administrative to get more info"
 msgstr ""
 "La fattura non é ancora disponibile, prego contattare l'amministrazione per "
 "maggiori informazioni"
 
-#: includes/class-wc-integration-fattureincloud.php:605
+#: includes/class-wc-integration-fattureincloud.php:646
 msgid ""
 "Invoice service not available, please try later or contact business owner"
 msgstr ""
 "Il servizio di fatturazione non è raggiungibile al momento, per favore "
 "riprovare più tardi."
 
-#: includes/class-wc-integration-fattureincloud.php:608
+#: includes/class-wc-integration-fattureincloud.php:649
 msgid "You do not have sufficient permissions to view this invoice."
 msgstr "Non hai permessi sufficienti per vedere questa fattura."
 
-#: includes/class-wc-integration-fattureincloud.php:665
+#: includes/class-wc-integration-fattureincloud.php:706
 #, php-format
 msgid "%2$s%% VAT"
 msgstr "IVA %2$s%%"
 
-#: includes/class-wc-integration-fattureincloud.php:708
-#: includes/class-wc-integration-fattureincloud.php:755
+#: includes/class-wc-integration-fattureincloud.php:749
+#: includes/class-wc-integration-fattureincloud.php:796
 msgid "Calculate"
 msgstr "Calcola"
 
-#: includes/class-wc-integration-fattureincloud.php:711
+#: includes/class-wc-integration-fattureincloud.php:752
 msgid "Close"
 msgstr "Chiudi"
 
-#: includes/class-wc-integration-fattureincloud.php:726
+#: includes/class-wc-integration-fattureincloud.php:767
 msgid "First Name"
 msgstr "Nome"
 
-#: includes/class-wc-integration-fattureincloud.php:729
+#: includes/class-wc-integration-fattureincloud.php:770
 msgid "Last Name"
 msgstr "Cognome"
 
-#: includes/class-wc-integration-fattureincloud.php:733
+#: includes/class-wc-integration-fattureincloud.php:774
 msgid "Gender"
 msgstr "Genere"
 
-#: includes/class-wc-integration-fattureincloud.php:735
+#: includes/class-wc-integration-fattureincloud.php:776
 msgid "Male"
 msgstr "Maschio"
 
-#: includes/class-wc-integration-fattureincloud.php:737
+#: includes/class-wc-integration-fattureincloud.php:778
 msgid "Female"
 msgstr "Femmina"
 
-#: includes/class-wc-integration-fattureincloud.php:739
+#: includes/class-wc-integration-fattureincloud.php:780
 msgid "Birth date"
 msgstr "Data nascita"
 
-#: includes/class-wc-integration-fattureincloud.php:741
+#: includes/class-wc-integration-fattureincloud.php:782
 msgid "Birth Day"
 msgstr "Giorno di Nascita"
 
-#: includes/class-wc-integration-fattureincloud.php:742
+#: includes/class-wc-integration-fattureincloud.php:783
 msgid "DD"
 msgstr "GG"
 
-#: includes/class-wc-integration-fattureincloud.php:743
+#: includes/class-wc-integration-fattureincloud.php:784
 msgid "Birth Month"
 msgstr "Mese di Nasciata"
 
-#: includes/class-wc-integration-fattureincloud.php:744
+#: includes/class-wc-integration-fattureincloud.php:785
 msgid "MM"
 msgstr "MM"
 
-#: includes/class-wc-integration-fattureincloud.php:745
+#: includes/class-wc-integration-fattureincloud.php:786
 msgid "Birth Year"
 msgstr "Anno di Nascita"
 
-#: includes/class-wc-integration-fattureincloud.php:746
+#: includes/class-wc-integration-fattureincloud.php:787
 msgid "YYYY"
 msgstr "AAAA"
 
-#: includes/class-wc-integration-fattureincloud.php:749
+#: includes/class-wc-integration-fattureincloud.php:790
 msgid "Birth Place"
 msgstr "Luogo di Nascita"
 
